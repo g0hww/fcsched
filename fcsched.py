@@ -39,47 +39,52 @@ fcd_sequencer_port  = 12345
 funcube_name		= "39444" # funcube catalog id
 
 if __name__ == '__main__':
-
-	predict_client = pexpect.spawn("nc -u "+predict_server_host+" "+predict_server_port)
 	
-	while(True):
-		predict_client.sendline("PREDICT "+funcube_name)
-		time.sleep(1.0)
-		predict_client.timeout=2.0	
-		res=predict_client.expect([binascii.unhexlify("0A1A"), pexpect.TIMEOUT, pexpect.EOF])
-		if res == 0:
-			print predict_client.before
-			num_lines =  len(predict_client.before.split(os.linesep))
-			time_aos = predict_client.before.split(os.linesep)[1].split(" ")[0]
-			print "Next AOS at " + time_aos
-			time_aos = float(time_aos)
-			time_los = predict_client.before.split(os.linesep)[num_lines-1].split(" ")[0]
-			print "Then LOS at " + time_los
-			time_los = float(time_los)
-			pass_duration = int(time_los - time_aos + 1)
-			print "Pass duration is " + str(pass_duration) + " secs."
-			time_now = time.time()
-			print "Time now is " + str(time_now)
-			time_to_sleep = time_aos - time_now;
-			if(time_to_sleep < 0):
-				time_to_sleep = 0
-				pass_duration = int(time_los - time_now)
-				print "Satellite is visible."
-				print "Pass remaining is " + str(pass_duration) + " secs."
-			if(time_to_sleep > 0):				
-				print "Sleeping for " + str(time_to_sleep) + " seconds."
-			time.sleep(time_to_sleep)
-			cmd = "start +"+str(pass_duration)
-			print "Sending command to fcdec: " + cmd
-			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			s.connect((fcd_sequencer_host, fcd_sequencer_port))
-			s.send(cmd)
-			s.close()
-			print "Sleeping for " + str(pass_duration) + " seconds."			
-			time.sleep(float(pass_duration))
-		else:
-			print "ERROR: Unable to get response from predict server!"
-			exit()
-	predict_client.close()
+    try:
+		while(True):
+			predict_client = pexpect.spawn("nc -u "+predict_server_host+" "+predict_server_port)	
+			predict_client.sendline("PREDICT "+funcube_name)
+			time.sleep(1.0)
+			predict_client.timeout=2.0	
+			res=predict_client.expect([binascii.unhexlify("0A1A"), pexpect.TIMEOUT, pexpect.EOF])
+			if res == 0:
+				print predict_client.before
+				num_lines =  len(predict_client.before.split(os.linesep))
+				time_aos = predict_client.before.split(os.linesep)[1].split(" ")[0]
+				print "Next AOS at " + time_aos
+				time_aos = float(time_aos)
+				time_los = predict_client.before.split(os.linesep)[num_lines-1].split(" ")[0]
+				print "Then LOS at " + time_los
+				time_los = float(time_los)
+				pass_duration = int(time_los - time_aos + 1)
+				print "Pass duration is " + str(pass_duration) + " secs."
+				time_now = time.time()
+				print "Time now is " + str(time_now)
+				time_to_sleep = time_aos - time_now;
+				if(time_to_sleep < 0):
+					time_to_sleep = 0
+					pass_duration = int(time_los - time_now)
+					print "Satellite is visible."
+					print "Pass remaining is " + str(pass_duration) + " secs."
+				if(time_to_sleep > 0):				
+					print "Sleeping for " + str(time_to_sleep) + " seconds."
+				time.sleep(time_to_sleep)
+				cmd = "start +"+str(pass_duration)
+				print "Sending command to fcdec: " + cmd
+				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				s.connect((fcd_sequencer_host, fcd_sequencer_port))
+				s.send(cmd)
+				s.close()
+				print "Sleeping for " + str(pass_duration) + " seconds."			
+				time.sleep(float(pass_duration))
+			else:
+				print "ERROR: Unable to get response from predict server!"
+				predict_client.close()
+				exit()
+    except (KeyboardInterrupt, SystemExit):
+        pass
+    finally:
+        predict_client.close()
+        print "\nDone."
 	
 	
