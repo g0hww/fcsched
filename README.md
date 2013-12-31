@@ -5,6 +5,8 @@ A simple python scheduler for the fcdec telemetry decoder for the Funcube-1
 (AO-73) satellite that uses a predict server for pass predictions.  It has been
 observed to work at least once, so far :)
 
+fcsched requires netcat (nc) and pexpect to be installed, as well as fcdec.
+
 Before running fcsched.py, you should:
 
 1) Have a predict server running (use "predict -s") that has good keps
