@@ -8,7 +8,8 @@ observed to work at least once, so far :)
 Before running fcsched.py, you should:
 
 1) Have a predict server running (use "predict -s") that has good keps
-for the AO-73 satellite. 
+for the AO-73 satellite.
+
 2) Have fcd_sequencer.sh running.
 
 Currently you must also edit fcsched.py to configure the predict server and 
