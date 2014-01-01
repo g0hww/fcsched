@@ -70,9 +70,20 @@ if __name__ == '__main__':
 						pass_duration = int(time_los - time_now)
 						print "Satellite is visible."
 						print "Pass remaining is " + str(pass_duration) + " secs."
-					if(time_to_sleep > 0):				
+					print "AOS in " + str(time_to_sleep) + " seconds."
+					if(time_to_sleep > (1*60.0)):
+						# if we're going to wait more than n mins,
+						# only sleep for half of that interval and
+						# then check with the predict server again
+						# in case the keps have been updated and 
+						# we need to adjust the AOS time
+						time_to_sleep = time_to_sleep/2.0
 						print "Sleeping for " + str(time_to_sleep) + " seconds."
-					time.sleep(time_to_sleep)
+						time.sleep(time_to_sleep)
+						continue					
+					elif(time_to_sleep > 0):				
+						print "Sleeping for " + str(time_to_sleep) + " seconds."
+						time.sleep(time_to_sleep)
 					cmd = "start +"+str(pass_duration)
 					print "Sending command to fcdec: " + cmd
 					try:
@@ -84,7 +95,7 @@ if __name__ == '__main__':
 						print "ERROR: failed to send command to fcd_sequencer!"
 					finally:		
 						print "Sleeping for " + str(pass_duration+30.0) + " seconds."
-						time.sleep(float(pass_duration+30.0))
+						time.sleep(float(pass_duration)+30.0)
 				else:
 					time.sleep(10.0)
 			else:
