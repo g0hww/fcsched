@@ -3,7 +3,7 @@ fcsched
 
 A simple python scheduler for the fcdec telemetry decoder for the Funcube-1 
 (AO-73) satellite that uses a predict server for pass predictions.  It has been
-observed to work more than once, and now might not even crash after LOS :)
+observed to work more than once and now might not even crash after LOS :)
 
 fcsched requires netcat (nc) and pexpect to be installed, as well as fcdec.
 
