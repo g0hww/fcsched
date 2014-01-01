@@ -68,7 +68,7 @@ if __name__ == '__main__':
 					time_to_sleep = time_aos - time_now;
 					if(time_to_sleep < 0):
 						if(time_now >= time_los):
-							print "LOS has occurred already."
+							print "LOS has occurred already. Sleeping for 30 seconds."
 							time.sleep(30.0)
 							continue
 						time_to_sleep = 0
