@@ -19,8 +19,10 @@ fcd_sequencer server host and port number info (defaults are for both on
 localhost).  The query to predict is done by catalogue number.
 
 When invoked, fcsched queries the predict server to determine when the next pass
-of FUNcube-1 starts and how long the next pass is.  It then sleeps until AOS and
-then commands fcd_sequencer to begin data collection for the duration of that
-pass. It then sleeps during the pass and subsequently queries the predict server
-for the details of the next pass.
+of FUNcube-1 starts and how long that next pass is.  It then sleeps for half the
+time until AOS then queries again (to allow for predict to provide an updated
+solution with new keps) It loops  like that until AOS is within 1 minute, sleeps
+until AOS and then commands fcd_sequencer to begin data collection for the 
+duration of that pass. It then sleeps during the pass and subsequently queries
+the predict server for the details of the next pass.
 
