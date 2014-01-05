@@ -32,7 +32,7 @@ import socket
 import binascii
 import os
 
-predict_server_host = "soltek.local"
+predict_server_host = "localhost"
 predict_server_port = "1210"
 fcd_sequencer_host  = "localhost"
 fcd_sequencer_port  = 12345
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 				print predict_client.before
 				num_lines =  len(predict_client.before.split(os.linesep))
 				# see if the pass info seems valid
-				if num_lines < 3:
+				if num_lines < 2:
 					print "ERROR: The predict server made no predictions for the satellite!"
 					exit();
 				# determine the pass AOS
