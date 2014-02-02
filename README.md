@@ -16,17 +16,16 @@ http://funcube.org.uk/working-documents/latest-two-line-elements/
 
 2) Have fcd_sequencer.sh running.
 
-Currently you must also edit fcsched.py to configure the predict server and 
-fcd_sequencer server host and port number info (defaults are for the server on
-localhost and the default predict port).  The query to predict is done by 
-catalogue number.  This should match the one in the keps you are using for 
-predict.
+You must edit fcsched.py to configure the predict server and fcd_sequencer server
+host and port number (defaults are for the server on localhost and the 
+default predict port).  The query to predict is done by catalogue number.  This
+should match the one in the keps you are using for predict.
 
 When invoked, fcsched asks the predict server to determine when the next pass
-of FUNcube-1 starts and how long that next pass is.  It then sleeps for half the
-time until AOS then asks (to allow for predict to provide an updated
-solution with new keps) It loops  like that until AOS is within 1 minute, sleeps
-until AOS and then commands fcd_sequencer to begin data collection for the 
-duration of that pass. It then sleeps during the pass and aks the predict server
-for the details of the next pass.
+of FUNcube-1 starts.  It then sleeps for half the time until AOS then asks again
+(to allow for predict to provide an updated solution with new keps). It loops 
+like that until AOS is within 1 minute, sleeps until AOS and then commands
+fcd_sequencer to begin data collection for the duration of that pass. It then
+sleeps during the pass and then aks the predict server for the details of the 
+next pass.
 
