@@ -29,3 +29,4 @@ fcd_sequencer to begin data collection for the duration of that pass. It then
 sleeps during the pass and then asks the predict server for the details of the 
 next pass.
 
+Note: the predict server interface uses UDP, whereas the communications between fcd_sequencer and fcsched uses TCP.  As TCP provides a reliable service, unlike UDP, in a distributed system it is best to run fcsched on the same host as the predict server.
