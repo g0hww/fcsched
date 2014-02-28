@@ -26,6 +26,6 @@ of FUNcube-1 starts.  It then sleeps for half the time until AOS then asks again
 (to allow for predict to provide an updated solution with new keps). It loops 
 like that until AOS is within 1 minute, sleeps until AOS and then commands
 fcd_sequencer to begin data collection for the duration of that pass. It then
-sleeps during the pass and then aks the predict server for the details of the 
+sleeps during the pass and then asks the predict server for the details of the 
 next pass.
 
